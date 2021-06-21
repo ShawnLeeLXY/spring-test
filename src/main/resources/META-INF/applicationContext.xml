@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="helloWorld" class="com.lxy.controller.HelloWorld">
+        <property name="name" value="Spring"/>
+    </bean>
+
+    <bean id="customerServiceImpl" class="com.lxy.service.impl.CustomerServiceImpl">
+    </bean>
+    <bean id="customerController" class="com.lxy.controller.CustomerController">
+        <property name="customerService" ref="customerServiceImpl"/>
+    </bean>
+
+    <bean id="userController" class="com.lxy.controller.UserController">
+        <property name="userService" ref="userService"/>
+    </bean>
+    <bean id="userService" class="com.lxy.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="userDao" class="com.lxy.dao.impl.UserDaoImpl"/>
+
+    <!-- 读取classpath下的db.properties配置文件 -->
+    <context:property-placeholder location="classpath:META-INF/db.properties" />
+
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+    </bean>
+
+    <!-- 声明扫描包及其子包的类，如果发现有组件注解的类，就创建对象并加入到容器中去 -->
+    <context:component-scan base-package="com.lxy" />
+
+</beans>
