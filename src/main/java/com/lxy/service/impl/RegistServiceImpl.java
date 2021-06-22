@@ -15,8 +15,9 @@ public class RegistServiceImpl implements RegistService {
 
     @Override
     public void register(User user) {
+        System.out.println("注册功能Service层方法开始执行...");
         registDao.register(user);
-        System.out.println("注册功能Service层方法执行了");
+        System.out.println("Service层方法执行完毕");
     }
 
 }

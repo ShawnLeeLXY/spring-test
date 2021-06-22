@@ -25,7 +25,7 @@ public class SaveService {
 
     @PreDestroy
     public void destroy() {
-        System.out.println("SaveService destroying..");
+        System.out.println("SaveService destroying...");
     }
 
 }

@@ -14,9 +14,10 @@ public class RegistController {
     private RegistService registService;
 
     public void register() {
+        System.out.println("注册功能Controller层方法开始执行...");
         User user = new User();
         registService.register(user);
-        System.out.println("注册功能Controller层方法执行了");
+        System.out.println("Controller层方法执行完毕");
     }
 
 }
