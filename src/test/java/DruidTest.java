@@ -1,4 +1,6 @@
+import com.lxy.dao.impl.JdbcDaoImpl;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
@@ -8,7 +10,7 @@ import java.sql.SQLException;
 /**
  * 测试连接池
  */
-public class testDruid {
+public class DruidTest {
 
     @Test
     public void testDataSource() {
@@ -20,6 +22,13 @@ public class testDruid {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testJdbcDao() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/applicationContext.xml");
+        JdbcDaoImpl jdbcDao = (JdbcDaoImpl) context.getBean(JdbcDaoImpl.class);
+        jdbcDao.testValue();
     }
 
 }
