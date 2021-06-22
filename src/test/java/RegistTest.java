@@ -11,4 +11,5 @@ public class RegistTest {
         RegistController registController = (RegistController) context.getBean(RegistController.class);
         registController.register();
     }
+
 }
