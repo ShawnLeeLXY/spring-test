@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="helloWorld" class="com.lxy.controller.HelloWorld">
         <property name="name" value="Spring"/>
@@ -39,5 +42,31 @@
 
     <!-- 声明扫描包及其子包的类，如果发现有组件注解的类，就创建对象并加入到容器中去 -->
     <context:component-scan base-package="com.lxy" />
+
+    <!-- 配置AopService -->
+    <bean id="aopService" class="com.lxy.service.impl.AopServiceImpl"/>
+
+    <!-- 配置事务管理器 -->
+    <bean id="th" class="com.lxy.controller.TransactionHandler" />
+
+    <!-- 配置aop -->
+    <aop:config>
+        <!-- 配置切面 -->
+        <aop:aspect ref="th">
+            <!-- 配置切入点：哪些类中的哪些方法需要做增强 -->
+            <aop:pointcut id="pt" expression="execution(* com.lxy.service..*.*(..))" />
+            <!-- 前置增强 -->
+            <!--<aop:before method="begin" pointcut-ref="pt" />-->
+            <!-- 后置增强 -->
+            <!--<aop:after-returning method="commit" pointcut-ref="pt" />-->
+            <!-- 异常增强 -->
+            <!--<aop:after-throwing method="rollback" pointcut-ref="pt" />-->
+            <!-- 最终增强 -->
+            <!--<aop:after method="closeSession" pointcut-ref="pt" />-->
+            <!-- 环绕增强 -->
+            <aop:around method="allInOne" pointcut-ref="pt"/>
+        </aop:aspect>
+        <!-- 织入：把切面加入到对象，并创建出代理对象的过程（该过程由Spring来完成）-->
+    </aop:config>
 
 </beans>

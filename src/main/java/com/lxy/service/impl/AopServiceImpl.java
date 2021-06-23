@@ -1,10 +1,12 @@
 package com.lxy.service.impl;
 
 import com.lxy.service.AopService;
+import org.springframework.stereotype.Service;
 
 /**
  * AOP测试：动态代理
  */
+@Service
 public class AopServiceImpl implements AopService {
 
     @Override
